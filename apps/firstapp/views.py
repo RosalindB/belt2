@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from .models import User, Quotes
 from django.contrib import messages
-from django.db.models import Sum, Count
+from django.db.models import Count
 
 def index(request):
     return render(request, 'quotes/index.html')
@@ -69,7 +69,6 @@ def uprof(request, id):
         'quote': t,
         'q': Quotes.objects.all()
     }
-    print t
     return render(request, 'quotes/userquotes.html', context)
 
 def add_quote(request, id):

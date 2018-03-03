@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Quotes</title>
+    </head>
+    <body>
+
+        <a href="/logout">Logout</a>
+        <h2>Welcome, {{request.session.alias}}!!!!</h2>
+        <br><br>
+        <h4>Quotable Quotes</h4>
+        <section style="border: 1px solid black; width: 45%; height: 300px; overflow-y: scroll; float: left;">
+            {% for x in q %}
+                <p>{{x.quote_by}}: {{x.text}}</p>
+                <p>Posted by <a href="/users/{{x.author.id}}">{{x.author.alias}}</a> 
+                    <form method="POST" action="/quote/add/{{x.id}}">
+                    {% csrf_token %}
+                    <input type="submit" value="Add to My List" />
+                    </form>
+                </p>
+            {% endfor %}
+        </section>
+        <aside style="border: 1px solid black; width: 40%; height: 30%; overflow: auto;float: right; ">
+            <fieldset>
+                <legend>Your Favorites</legend>
+                {% for f in myfav %}
+                <p>{{f.quote_by}}:  {{f.text}}</p>
+                <p>Posted by <a href="/users/{{f.author.id}}">{{f.author.alias}}</a> 
+                    <form method="POST" action="/quote/remove/{{f.id}}">
+                    {% csrf_token %}
+                    <input type="submit" value="Remove from My List" />
+                    </form>
+                </p>
+                {% endfor %}
+            </fieldset>
+        </aside><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br> 
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        <form action="/submit_quote" method="POST">
+            {% csrf_token %}
+            <h4>Contribute a Quote</h4>
+            
+            <input type="hidden" name= "author_id" value="{{request.session.user_id}}">
+            <p>Quoted By: <input type="text" name="quote_by"></p>
+            <p class="formfield"><label for="textarea">Message: </label> <textarea id="textarea" name="text" rows="4" style="vertical-align: top;"></textarea></p><br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

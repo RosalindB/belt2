@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Quotes</title>
+    </head>
+    <body>
+        <a href="/quotes">Dashboard</a>
+        <a href="/logout">Logout</a>
+        
+        <h3>Posts by {{user.alias}}</h3>
+        
+        <h3>Count: {{user.quote.count}}</h3>
+        {% for x in q %}
+            {% if x.author.id == user.id %}
+                <p style="color: red;">{{x.quote_by}}: <p>{{x.text}}</p></p>
+            {% endif %}
+        {% endfor %}
+    </body>
+</html>

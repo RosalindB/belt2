@@ -19,3 +19,4 @@ six==1.11.0
 typing==3.6.4
 virtualenv==15.1.0
 wrapt==1.10.11
+django ~> 1.11.18
